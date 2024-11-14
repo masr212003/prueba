@@ -1,0 +1,87 @@
+.container-max {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  display: block;
+  
+}
+
+.main-box {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 20px;
+  width: 50%;
+  perspective: 1000px; 
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
+  flex-direction: column; 
+  align-items: center; 
+  margin-top: 30px;
+  margin: 30px auto;
+}
+
+.info {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+label {
+  font-weight: bold;
+}
+
+.monto-label {
+  margin-left: 20px;
+}
+
+.esta {
+  margin-bottom: 20px;
+}
+
+.cantidad-label, .monto-label {
+  margin-left: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.pedidoLista table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.pedidoLista th, .pedidoLista td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+  .main-box {
+      width: 80%;
+  }
+
+  .navbar input[type="text"], .navbar select {
+      width: auto;
+      flex-grow: 1;
+  }
+}

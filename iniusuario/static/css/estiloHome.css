@@ -1,0 +1,212 @@
+body{
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;   
+     font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+}
+
+.container .naver-container{
+    background: rgb(15, 15, 15);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.naver-container input{
+    height: 40px;
+    border:none;
+}
+
+.naver-container .buscar{
+    height: 42px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 10px 20px;
+    border: none;
+    margin-right: 25px;
+    background: #2838ff;
+    color: white;
+    font-weight: bold;
+    width: 100px;
+}
+
+.naver-container select{
+    height: 42px;
+    width: 140px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border: 1px solid #E4E7ED;
+    margin-left: 300px;
+    background: #fff;
+}
+
+.naver-container .inicio{
+    height: 37px;
+    width: 120px;
+    margin-right: 250px;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+    border-radius: 5px;  
+    font-size: 15px;  
+}
+
+.naver-container a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+}
+.naver-container a img{
+    height: 22px;
+    width: 22px;
+}
+
+.product-container .img-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+.img1{
+    width: 340px;
+    height: 255px;
+    margin-top: 43px;
+    margin-right: 40px;
+    margin-bottom: 60px;
+    background: rgb(233, 233, 239);
+    transition: transform 0.5s;
+    overflow: hidden;
+}
+
+.img1 img{
+    width: 330px;
+    height: 245px;
+}
+
+.img1 img:hover{
+    transform: scale(1.2);
+}
+
+
+.product-expo{
+    width: 81.5%;
+    margin-left: 105px;
+}
+
+.product-expo h1{
+    font-weight: bold;
+}
+
+
+
+.product-expo .produc{
+    width: 300px;
+    border: .5px solid gray;
+    
+}
+
+
+.product-expo .produc .img-pro{
+    width: 300px;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-pro img{
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+.produc p{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.produc .nombre-product{
+    margin-bottom: 0;
+}
+
+.produc .precio{
+    margin-top: 5px;
+    color: #2838ff;
+}
+
+.produc input{
+    margin-left: 22%;
+    margin-bottom: 25px;
+    background: wheat;
+}
+
+.produc button{
+    margin-left: 25%;
+    margin-bottom: 25px;
+    height: 40px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    border:.5px solid #2838ff ;
+    transition: .5s;
+}
+
+.produc button:hover{
+    background: #2838ff;
+    color: white;
+}
+
+.product-container .ofertas{
+    background: red;
+    margin-top: 80px;
+    height: 400px;
+    display: flex;
+   
+}
+
+.ofertas .contenido{
+    justify-content: center;
+}
+
+.contenido h1{
+    font-weight: bold;
+    text-align: center;
+}
+
+.contenido p{
+    text-align: center;
+}
+
+.ofertas .contenido .container-cuenta{
+    display: flex;
+    margin-top: 60px;
+}
+
+.ofertas .cuenta{
+    background: green;
+    margin: 0 auto;
+    width: 100px;
+    margin-right: 25px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    text-align: center;
+}
