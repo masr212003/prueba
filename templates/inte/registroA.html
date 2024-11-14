@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/estiloRegistro.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Registro</h1>
+        <div class="icono"><img src="{% static 'img/icon.png' %}" alt=""></div>
+        <form action="" method="POST">{% csrf_token %}
+            <div class="total">
+                <div class="data_p">
+                    <input type="text" name="name" id="" class="input_usu" placeholder="Nombre" required>
+                    <input type="text" name="last_name" id="" class="input_usu" placeholder="Apellido" required>
+                    <input type="text" name="cedula" id="" class="input_usu" placeholder="Cedula" required>
+                    <input type="text" name="telefono" id="" class="input_usu" placeholder="Numero de telefono" required>
+                </div>
+                <div class="requered">
+                    <input type="text" name="username" id="" class="input_usu" placeholder="Nombre de usuario" required>
+                    <input type="text" name="password" id="" class="input_usu" placeholder="Contraseña" required>
+                    <input type="text" name="password_r" id="" class="input_usu" placeholder="Contraseña (repetir)" required>
+                    <button type="submit" class="btn">Registrar</button>
+                </div>
+
+            </div>
+            
+        </form>
+        {% if error %}
+            <p style="color: red;">{{error}}</p>
+        {% endif %}
+        <a href="{% url 'Login'%}" class="cuenta">¿Ya tienes cuenta?</a>
+        <a href="{% url 'Home' %}" class="inicio">Ir al inicio</a>
+    </div>
+</body>
+</html>

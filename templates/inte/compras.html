@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrito de Compras</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/slick.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/usuHome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estiloCompras.css' %}">
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="#" class="logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding: 6px;">
+                        <div class="header-search">
+                            <form method="GET" action="{% url 'Busqueda' %}">
+                                <select class="input-select">
+                                    <option value="0">Categorias</option>
+                                    <option value="1">Categoria 01</option>
+                                    <option value="1">Categoria 02</option>
+                                </select>
+                                <input class="input" placeholder="Buscar" name="buscar">
+                                <button class="search-btn">Buscar</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <div class="log"> 
+                                <a href="#">
+                                    <i><img src="{% static 'img/icon.png' %}" alt="" width="21" height="21"></i>
+                                    <span style="color: white; font-family: Arial, Helvetica, sans-serif;">Usuario</span>
+                                </a>
+                                <div class="dropdown-content">
+                                    <a href="#">Usuario</a> 
+                                    {% if DatosUsuario and DatosUsuario.tp_usu == "admin" %} 
+                                        <a href="{% url 'adminUsu' %}">Administrador</a> 
+                                    {% endif %}
+                                    <a href="{% url 'exit' %}">Cerrar Sesión</a> 
+                                </div> 
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <a href="{% url 'Ver' %}">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Tu carrito</span>
+                                    </a>
+                                </a>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <a href="{% url 'Home' %}">
+                                        <i><img src="{% static 'img/home.png' %}" alt="" width="21" height="21"></i>
+                                        <span>Inicio</span>
+                                    </a>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-max">
+        <div class="container">
+            {% for orden_obj in productos_por_orden %} 
+                <div class="main-box">
+                    <div class="info">
+                        <label for="fecha-compra">Fecha de Compra: {{ orden_obj.orden.fecha }}</label>
+                        <label for="monto" class="monto-label">Monto Total: {{orden_obj.orden.total}}</label>
+                    </div>
+                    <div class="esta">
+                        <label for="" name="estado">Estado: {{ orden_obj.orden.estado|capfirst }}</label>
+                    </div>
+                    <div class="info2">
+                        <button class="mostrarPedidoBtn" data-id="{{ orden_obj.orden.id }}">Mostrar Pedido</button>
+                        <div id="pedidoLista-{{ orden_obj.orden.id }}" class="pedidoLista" style="display: none;">
+                            <table> 
+                                <thead> 
+                                    <tr> 
+                                        <th>Nombre</th> 
+                                        <th>Marca</th> 
+                                        <th>Cantidad</th> 
+                                        <th>Precio</th>
+                                    </tr> 
+                                </thead> 
+                                <tbody> 
+                                    {% for producto in orden_obj.productos %} 
+                                        <tr> 
+                                            <td>{{ producto.producto.nombre }}</td> 
+                                            <td>{{ producto.producto.marca }}</td> 
+                                            <td>{{ producto.cantidad }}</td> 
+                                            <td>{{producto.producto.precio}}</td>
+                                        </tr> 
+                                    {% endfor %} 
+                                </tbody> 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.mostrarPedidoBtn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var listaId = 'pedidoLista-' + this.getAttribute('data-id');
+                var lista = document.getElementById(listaId);
+                if (lista.style.display === 'none' || lista.style.display === '') {
+                    lista.style.display = 'block';
+                } else {
+                    lista.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

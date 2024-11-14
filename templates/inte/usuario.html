@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/usuario.css' %}">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="left-panel">
+            
+            <img alt="User profile picture" height="100" src="{% static 'img/usu.png' %}" width="100"/>
+            <P>
+                Bienvenida {{user.username|capfirst}}
+            </P>
+        </div>
+        <div class="right-panel">
+            <div class="regre"><a href="{% url 'Home' %}">Regresar</a></div>
+            <h2>INFORMACIÓN DE USUARIO</h2>
+            
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="{{datos.nombre|capfirst}}" readonly>
+            </div>
+            <div class="campo">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" value="{{datos.apellido|capfirst}}" readonly>
+            </div>
+            <div class="campo">
+                <label for="cedula">Cédula</label>
+                <input type="text" id="cedula" name="cedula" value="{{datos.cedula}}" readonly>
+            </div>
+            <div class="campo">
+                <label for="telefono">Número Telefónico</label>
+                <input type="tel" id="telefono" name="telefono" value="{{datos.telefono}}" readonly>
+            </div>
+            <div class="campo">
+                <label for="username">Nombre de Usuario</label>
+                <input type="tel" id="username" name="username" value="{{user.username}}" readonly>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

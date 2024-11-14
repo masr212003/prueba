@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/estiloAdminUsu.css' %}">
+    <title>Administrador</title>
+</head>
+<body>
+    <div class="container">
+        <style>
+            /* El modal (oculto por defecto) */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo (quedará en la misma posición) */
+    z-index: 1; /* Se muestra encima */
+    padding-top: 100px; /* Ubicación del modal */
+    left: 0;
+    top: 0;
+    width: 100%; /* Completo (cubre toda la pantalla) */
+    height: 100%; /* Completo (cubre toda la pantalla) */
+    overflow: auto; /* Habilita el desplazamiento si es necesario */
+    background-color: rgb(0,0,0); /* Color de fondo con opacidad */
+    background-color: rgba(0,0,0,0.4); /* Color de fondo con opacidad */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+}
+
+/* El botón de cerrar (x) */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+        </style>
+        <div class="naver">
+            <div class="img">
+                <img src="{% static 'img/logo.png' %}" alt="" width="90px" height="60px">
+                <p>Universal Store</p>
+            </div>
+
+            <div class="navegar">
+                <a href="{% url 'adminCate' %}"> <button><img src="{% static 'img/cate.png' %}" alt="" width="30px" height="20px"><p> Categorias</p></button></a>
+                <a href="{% url 'adminMarca' %}"> <button><img src="{% static 'img/marca.png' %}" alt="" width="30px" height="20px"><p> Marcas</p></button></a>
+                <a href="{% url 'adminProduct' %}"> <button><img src="{% static 'img/producto.png' %}" alt="" width="30px" height="20px"><p> Productos</p></button></a>
+                <a href="{% url 'adminUsu' %}"> <button><img src="{% static 'img/icon.png' %}" alt="" width="30px" height="20px"><p> Usuarios</p></button></a>
+                <a href="{% url 'Home' %}" class="salida"> <button><img src="{% static 'img/salir.png' %}" alt="" width="30px" height="20px"><p> Salir</p></button></a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <p>Bienvenido, {{name|capfirst}}</p>
+            </div>
+            <h2>Ordenes</h2>
+            <h1>Busquedas</h1>
+            <div class="busqueda">
+                <form action="{% url 'resultadoOrden' %}" method="POST">{% csrf_token %}
+                    <input type="text" name="bus" placeholder="Buscar nombre o cédula">
+                    <button type="submit" class="bus">Buscar</button>
+                </form>
+            </div>
+            <div class="center-info">
+                <div class="scroll-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Receptor</th>
+                                <th>Usuario</th>
+                                <th>Ubicación</th>
+                                <th>Pedido</th>
+                                <th>Referencia</th>
+                                <th>Estado</th>
+                                <th>Cambiar estado a pendiente</th>
+                                <th>Cambiar estado a cancelado</th>
+                                <th>Cambiar estado a completado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for orden_obj in productos_por_orden %}
+                            <tr>
+                                <td>{{ orden_obj.orden.receptor }}</td>
+                                <td>{{ orden_obj.orden.usuario }}</td>
+                                <td>{{ orden_obj.orden.ubicacion }}</td>
+                                <td>
+                                    <button class="show-form-btn" data-productos='[
+                                      {% for producto in orden_obj.productos %}
+                                        {
+                                          "nombre": "{{ producto.producto.nombre }}",
+                                          "marca": "{{ producto.producto.marca }}",
+                                          "cantidad": "{{ producto.cantidad }}"
+                                        }
+                                        {% if not forloop.last %}, {% endif %}
+                                      {% endfor %}
+                                    ]'>Mostrar pedido</button>
+                                  </td>
+                                  
+                                <td>{{ orden_obj.orden.referencia }}</td>
+                                <td>{{ orden_obj.orden.estado }}</td>
+                                <td>
+                                    <form action="{% url 'cambioOrpen' %}" method="post">{% csrf_token %}
+                                        <input type="hidden" value="{{ orden_obj.orden.id }}" name="username">
+                                        <button class="cam">Cambiar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url 'cambioOrcan' %}" method="post">{% csrf_token %}
+                                        <input type="hidden" value="{{ orden_obj.orden.id }}" name="username">
+                                        <button class="cam">Cambiar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url 'cambioOrcom' %}" method="post">{% csrf_token %}
+                                        <input type="hidden" value="{{ orden_obj.orden.id }}" name="username">
+                                        <button class="cam">Cambiar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    {% for producto in orden_obj.productos %} 
+                                        <p>Producto: {{ producto.producto.nombre }}</p>
+                                        <p>Marca: {{ producto.producto.marca }}</p>    
+                                        <p>Cantidad: {{ producto.cantidad }}</p> 
+                                       
+                                    {% endfor %} 
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+   
+
+    <script>
+       // Obtener el modal y su contenido
+var modal = document.getElementById("myModal");
+var modalContent = document.querySelector(".modal-content");
+
+// Obtener los botones que abren el modal
+var btns = document.querySelectorAll(".show-form-btn");
+
+// Añadir evento a cada botón para abrir el modal con contenido dinámico
+btns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    // Obtener los productos del atributo data-productos del botón
+    var productos = JSON.parse(btn.getAttribute('data-productos'));
+
+    // Crear el contenido del modal con los productos
+    var modalHTML = '<span class="close">&times;</span>';
+    productos.forEach(function(producto) {
+      modalHTML += `
+        <p>Producto: ${producto.nombre}</p>
+        <p>Marca: ${producto.marca}</p>
+        <p>Cantidad: ${producto.cantidad}</p>
+      `;
+    });
+
+    // Actualizar el contenido del modal
+    modalContent.innerHTML = modalHTML;
+    modal.style.display = "block";
+
+    // Obtener el <span> que cierra el modal y añadir evento de cierre
+    var span = document.querySelector(".modal-content .close");
+    span.onclick = function() {
+      modal.style.display = "none";
+    };
+  });
+});
+
+// Cerrar el modal cuando el usuario hace clic fuera del modal
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+    </script>
+</body>
+</html>

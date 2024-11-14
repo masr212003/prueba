@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/estiloLogin.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login_container">
+        <h1>Inicio de Sesion</h1>
+        <div class="icono_usuario"><img src="{% static 'img/icon.png' %}" alt=""></div>
+        <form action="" method="post"> {% csrf_token %}
+            <input type="text" name="username" id="" class="input_usu" placeholder="Nombre de usuario" required>
+            <br>
+            <input type="password" name="password" id="" class="input_cl" placeholder="Contraseña" required>
+            <br>
+            <button type="submit" class="btn">Ingresar</button>
+            <a href="{% url 'Registro'%}" class="cuenta">¿No tienes cuenta?</a>
+            <a href="{% url 'Home' %}" class="inicio">Ir al inicio</a>
+        </form>
+        </div>
+    </div>
+</body>
+</html>

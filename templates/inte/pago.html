@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/estiloPago.css' %}">
+    <title>Pago</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login_container">
+        <h1>Pago</h1>
+        
+        <div class="icono"><img src="{% static 'img/dine.png' %}" alt=""></div>
+        <div class="datos">
+            <h2>Univeral Store</h2>
+            <h2>Cedula: 30.154.772</h2>
+            <h2>Telefono: 0412-128-5691</h2>
+            <h2>Banco: Banesco</h2>
+        </div>
+        <form action="{% url 'PagosPedi' %}" method="POST">{% csrf_token %}
+            
+                <div class="requered">
+                    <input type="text" name="username" id="" class="input_usu" placeholder="Nombre de receptor" required>
+                    <input type="text" name="ubi" id="" class="input_usu" placeholder="Ubicacion" required>
+                    <input type="text" name="refe" id="" class="input_usu" placeholder="Numero de referencia" required>
+                    <button type="submit" class="btn">Comprar</button>
+                </div>
+                <a href="{% url 'Home' %}" class="inicio">Ir al inicio</a>
+            </div>
+            
+        </form>
+        
+    </div>
+</div>
+</body>
+</html>

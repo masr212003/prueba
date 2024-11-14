@@ -1,0 +1,489 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Universal Store</title>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+		<link type="text/css" rel="stylesheet" href="{% static 'css/slick.css' %}"/>
+		<link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css' %}"/>
+		<link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}"/>
+		<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+		<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+		<link rel="stylesheet" href="{% static 'css/usuHome.css' %}">
+	
+
+    </head>
+	<body>
+		<header>
+			<div id="header">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a href="#" class="logo">
+									<img src="" alt="">
+								</a>
+							</div>
+						</div>
+						<div class="col-md-6" style="padding: 6px;">
+							<div class="header-search">
+								<form method="GET"  action="{% url 'Busqueda' %}" >
+									<select class="input-select">
+										<option value="0">Categorias</option>
+										<option value="1">Categoria 01</option>
+										<option value="1">Categoria 02</option>
+									</select>
+									<input class="input" placeholder="Buscar" name="buscar">
+									<button class="search-btn" >Buscar</button>
+								</form>
+							</div>
+						</div>
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								{% if user.is_authenticated %}
+									<div class="log"> 
+										<a href="#">
+											<i><img src="{% static 'img/icon.png' %}" alt=""  width="21" height="21"></i>
+											<span style="color: white; font-family: Arial, Helvetica, sans-serif;">Usuario</span>
+										</a> <div class="dropdown-content">
+										 <a href="{% url 'usuario' %}">Usuario</a>
+
+										 {% if DatosUsuario and DatosUsuario.tp_usu == "admin" %} 
+										 <a href="{% url 'adminUsu' %}">Administrador</a> 
+										 {% endif %}
+
+										 <a href="{% url 'exit' %}">Cerrar Sesión</a> 
+										</div> 
+									</div>
+									<div class="dropdown">
+										<a class="dropdown-toggle"  data-toggle="dropdown" aria-expanded="true">
+											<a href="{% url 'Ver' %}">
+											<i class="fa fa-shopping-cart"></i>
+											<span>Tu carrito</span>
+											</a>
+										</a>
+										
+									</div>
+									
+									<div class="dropdown">
+										<a class="dropdown-toggle"  data-toggle="dropdown" aria-expanded="true">
+											<a href="{% url 'Compras' %}">
+											<i><img src="{% static 'img/compra.png' %}" alt="" width="21" height="21"></i>
+											<span>Tus compras</span>
+											</a>
+										</a>
+										
+									</div>
+									{% else %}
+									<a href="{% url 'Login' %}" class="btn btn-primary" style="margin-top: 10px;">Iniciar Sesión</a>
+									{% endif %}
+							
+							</div>
+						</div>
+					</div>
+
+				</div>
+		</header>
+
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop01.png' %}" alt="">
+							</div>
+							<div class="shop-body">
+								<a href="#" class="cta-btn"> <i class=""></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop03.png' %}" alt="">
+							</div>
+							<div class="shop-body">
+								<a href="#" class="cta-btn"> <i class=""></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop02.png' %}" alt="">
+							</div>
+							<div class="">
+								<a href="#" class="cta-btn"> <i class=""></i></a>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+		
+			</div>
+			
+		</div>
+	
+		<div class="section">
+			{% for categoria, productos in productos_por_categoria.items %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">{{ categoria.nombre | upper}}</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <div id="tab{{ forloop.counter }}" class="tab-pane active"> 
+                            <div class="products-slick" data-nav="#slick-nav-{{ forloop.counter }}"> 
+                                {% for producto in productos %}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-name"><a href="#">{{ producto.nombre }}</a></h3>
+                                        <h4 class="product-price">Bs {{ producto.precio }}</h4>
+                                        <div class="product-btns">
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Cantidad: {{producto.cantidad}} <br> Marca:{{producto.marca}} <br> Peso: {{producto.peso}} g </span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+										<form action="{% url 'agregar' producto.id %}" method="post">
+											{% csrf_token %}
+											<input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                        	<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al Carrito</button>
+										</form>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+							<div id="slick-nav-{{ forloop.counter }}" class="products-slick-nav"></div> 
+                        </div>
+						
+                    </div>
+			
+                </div>
+				
+			</div>
+            
+        </div>
+    </div>
+    {% endfor %}
+		</div>
+		<div id="hot-deal" class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="hot-deal">
+							<ul class="hot-deal-countdown">
+								<li>
+									<div>
+										<h3>02</h3>
+										<span>Días</span>
+									</div>
+								</li>
+								<li>
+									<div>
+										<h3>10</h3>
+										<span>Horas</span>
+									</div>
+								</li>
+								<li>
+									<div>
+										<h3>34</h3>
+										<span>Minutos</span>
+									</div>
+								</li>
+							</ul>
+							<h2 class="text-uppercase">gran oferta esta semana</h2>
+							<p>Nueva colección Hasta 50% de descuento</p>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title">Más vendidos</h3>
+							<div class="section-nav">
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="row">
+							<div class="products-tabs">
+								<div id="tab2" class="tab-pane fade in active">
+									<div class="products-slick" data-nav="#slick-nav-2">
+										<div class="product">
+											<div class="product-img">
+												<img src="{% static 'img/product06.png' %}" alt="">
+												<div class="product-label">
+													<span class="sale">-30%</span>
+													<span class="new">NEW</span>
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
+											</div>
+										</div>
+										<div class="product">
+											<div class="product-img">
+												<img src="{% static 'img/product07.png' %}" alt="">
+												<div class="product-label">
+													<span class="new">NEW</span>
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
+											</div>
+										</div>
+										<div class="product">
+											<div class="product-img">
+												<img src="{% static 'img/product08.png' %}" alt="">
+												<div class="product-label">
+													<span class="sale">-30%</span>
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+												<div class="product-rating">
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp"></span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">agregar para comparar</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">vista rápida</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
+											</div>
+										</div>
+										<div class="product">
+											<div class="product-img">
+												<img src="{% static 'img/product09.png' %}" alt="">
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
+											</div>
+										</div>
+										<div class="product">
+											<div class="product-img">
+												<img src="{% static 'img/product01.png' %}" alt="">
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			</div>
+
+		</div>
+
+		<div id="newsletter" class="section"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Suscríbete<strong></strong></p>
+							<form>
+								<input class="input" type="" placeholder="">
+								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer id="footer">
+			<div class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Sobre nosotros</h3>
+								<p>Universal Store nos dedicamos a ofrecer productos de alta calidad que mejoran tu vida diaria.</p>
+								<ul class="footer-links">
+									<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+									<li><a href="#"><i class="fa fa-phone"></i>+584122628889</a></li>
+									<li><a href="#"><i class="fa fa-envelope-o"></i>UniversalStore.@gmail.com</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Categoria</h3>
+								<ul class="footer-links">
+									<li><a href="#">Ofertas especiales</a></li>
+									<li><a href="#">Laptops</a></li>
+									<li><a href="#">Telefonos</a></li>
+									<li><a href="#">Camaras</a></li>
+									<li><a href="#">Accessorios</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="clearfix visible-xs"></div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Informacion</h3>
+								<ul class="footer-links">
+									<li><a href="#"></a></li>
+									<li><a href="#">Sobre nosotros
+										Contáctenos</a></li>
+									<li><a href="#">política de privacidad</a></li>
+									<li><a href="#">Pedidos y Devoluciones</a></li>
+									<li><a href="#">Términos y condiciones</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Servicios</h3>
+								<ul class="footer-links">
+									<li><a href="#">Mi cuenta</a></li>
+									<li><a href="#">Ver carrito</a></li>
+									<li><a href="#">Seguimiento de  pedido</a></li>
+									<li><a href="#">Ayuda</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="bottom-footer" class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<ul class="footer-payments">
+								<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+								<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+								<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+								<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+								<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+								<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+							</ul>
+							<span class="copyright">
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/slick.min.js' %}"></script>
+		<script src="{% static 'js/nouislider.min.js' %}"></script>
+		<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
+</html>
